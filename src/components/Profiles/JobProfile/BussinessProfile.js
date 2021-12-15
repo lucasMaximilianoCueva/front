@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react'
+import { companyData, jobsData } from '../../../data/getData';
+
 import { Badge } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
-import { companyData, jobsData } from '../../../data/getData';
 
 const BussinessProfile = () => {
     const {id} = useParams();

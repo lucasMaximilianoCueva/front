@@ -1,18 +1,15 @@
-import React, { useEffect, useState } from "react";
 
+import React, { useContext, useEffect, useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
+import { UserContext } from '../../Context/UserContext';
 import headerOptions from './headerOptions';
 
-const Header = ({options}) => {
-    const [dataUser, setDataUser] = useState([]);
 
-    useEffect(() => {
-      fetch("/api/getuser")
-        .then((res) => res.json())
-        .then((res) => setDataUser(res))
-        .catch((err) => {
-          console.log(`error: ${err}`);
-        });
-    }, []);
+const Header = ({options}) => {
+    const location = useLocation();
+    const { authUser} = useContext(UserContext);
+
+
 
     return (
         <header className="bg-dark py-5 bg" style={{backgroundImage:'url(/img/bk_home.png)'}}>
@@ -24,11 +21,26 @@ const Header = ({options}) => {
                     <div className="col-lg-8 col-xl-7 col-xxl-6">
                     <div className="my-5 text-center text-xl-start">
                             <h1 className="display-3 fw-bolder text-white mb-2">{headerOptions[options].title}</h1>
-                            <p className="lead fw-normal text-white-50 mb-4">{headerOptions[options].description}</p>
-                            <div className="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
-                                {!dataUser.name && <a className="btn btn-primary btn-lg px-4 me-sm-3" href="/login">{headerOptions[options].primaryButton}</a>}
-                                {!dataUser.name && <a className="btn btn-outline-light btn-lg px-4" href="/signup">{headerOptions[options].secondaryButton}</a>}
-                            </div>
+                            <p className="lead fw-normal text-white mb-4">{headerOptions[options].description}</p>
+                            {
+                                (location.pathname === '/') &&
+                                <div className="d-grid gap-3 d-sm-flex justify-content-sm-center justify-content-xl-start">
+                                  
+                                    {
+                                        !authUser && 
+                                            <Link className="btn btn-primary btn-lg px-4 me-sm-3 text-light" exact to="/login">
+                                                {headerOptions[options].primaryButton}
+                                            </Link>
+                                    }
+                                    {
+                                        !authUser && 
+                                            <Link className="btn btn-outline-light border-white btn-lg px-4 text-light" exact to="/signup">
+                                                {headerOptions[options].secondaryButton}
+                                            </Link>
+                                    }
+
+                                </div>
+                            }
                         </div>
                     </div>
                 </div>

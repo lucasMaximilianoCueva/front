@@ -1,5 +1,18 @@
 
 //Colores
+
+/* make the customizations */
+$theme-colors: (
+    "primary": #00b6ea,
+    "blue": #00b6ea,
+    "secondary": #CE7072,
+    "info":#CE7072,
+    "success": #005267,
+);
+
+/* import bootstrap to set changes */
+@import "~bootstrap/scss/bootstrap";
+
 $celeste: #00b6ea;
 $rosa: #CE7072;
 $verde-verde: #02865a;

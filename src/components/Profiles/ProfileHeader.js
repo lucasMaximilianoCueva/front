@@ -1,36 +1,20 @@
+import React, { useContext, useEffect, useState } from 'react'
+import { Spinner } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom'
-import React, { useEffect, useState } from 'react'
+import {images} from '../../assets/images'
+import { UserContext } from '../../Context/UserContext';
 import { companyData, jobsData } from '../../data/getData';
 
-import { Spinner } from 'react-bootstrap';
-import {images} from '../../assets/images'
-
 const ProfileHeader = ({id}) => {
+    const {dataUser} = useContext(UserContext)
     const [loader, setLoader] = useState(false)
     const [user, setUser] = useState(true)
-    const [dataUser, setDataUser] = useState([]);
-
-    useEffect(() => {
-      fetch("/api/getuser")
-        .then((res) => res.json())
-        .then((res) => setDataUser(res))
-        .catch((err) => {
-          console.log(`error: ${err}`);
-        });
-    }, []);
-    
     const [ values, setValues ] = useState({
         name: '',
         description: '',
-        avatar: ''
+        gender: ''
     });
     const location = useLocation();
-
-    const userData = {
-        name: dataUser.name,
-        description: "There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form, by injected humour, or randomised words which don't look even slightly believable. If you are going to use a passage of Lorem Ipsum",
-        avatar: 'avatar3'
-    }
 
     const getJobs = async () => {
         const data = await jobsData()
@@ -48,7 +32,7 @@ const ProfileHeader = ({id}) => {
         setValues({
             name: company.data.attributes.name,
             description: company.data.attributes.description,
-            avatar: company.data.attributes.logo
+            logo: company.data.attributes.logo
         })
         setLoader(false)
         return company
@@ -57,7 +41,11 @@ const ProfileHeader = ({id}) => {
 
     useEffect(()=>{
         if (location.pathname.includes('dashboard')) {
-            setValues(userData)
+            setValues({
+                name: dataUser.name,
+                description: dataUser.portfolio,
+                gender: dataUser.gender
+            })
         }
         if (location.pathname.includes('jobs')) {
             setLoader(true)
@@ -82,9 +70,9 @@ const ProfileHeader = ({id}) => {
                             <div className="mb-3 profile">
                                 <div className="row">
                                     <div className="col-12">
-
-                                        {/* <button className="position-absolute btn ml-3 mt-3 text-white">Editar</button> */}
-                                        
+                                        {/* {
+                                            user && <button className="position-absolute btn ml-3 mt-3 text-white">Editar</button>
+                                        } */}
                                         <div className="col-12 ml-auto m-auto">
                                             <div className="p-3 my-4 rounded text-center shadow-sm">
 
@@ -92,8 +80,11 @@ const ProfileHeader = ({id}) => {
                                                     <img 
                                                         src={
                                                             user 
-                                                            ? values && images[values.avatar]
-                                                            : values && values.avatar
+                                                            ? values && 
+                                                                (values.gender === 'masculino' 
+                                                                    ? images.avatar1
+                                                                    : images.avatar5)
+                                                            : values && values.logo
                                                         } 
                                                         alt='avatar' 
                                                         className="profile__avatarImage rounded-circle img-fluid mb-2" 
@@ -104,8 +95,8 @@ const ProfileHeader = ({id}) => {
                                                 </Link>
 
                                                 <div>
-                                                    <h3 className="title text-light">{dataUser.name}</h3>
-                                                    <p className="normal text-light">{dataUser.knowledgeareas}</p>
+                                                    <h3 className="title text-light">{values && values.name}</h3>
+                                                    <p className="normal text-light">{values && values.description}</p>
                                                 </div>
                                             </div>
                                         </div>

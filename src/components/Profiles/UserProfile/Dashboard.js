@@ -21,7 +21,7 @@ const Dashboard = () => {
             link: 'postulaciones',
             icon: <RiFileCopy2Fill/>,
             title: 'Postulaciones',
-            quantity: 2,
+            quantity: 0,
             id: id
         },
         {

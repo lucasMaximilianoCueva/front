@@ -1,10 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
+import { SearchContext } from '../../../Context/SearchContext';
 
 
-export const Pill = ({ titulo }) => {
+export const Pill = ({ title, category }) => {
+    const { setSearch } = useContext(SearchContext);
+
+    const handleSearch = () => {
+        setSearch(category)
+        console.log(category)
+    }
+
     return (
-        <div className="pastilla">
-            {titulo}
+        <div className="pastilla" onClick={handleSearch}>
+            {title}
         </div>
     )
 }

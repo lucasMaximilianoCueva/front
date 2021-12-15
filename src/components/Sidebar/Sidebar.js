@@ -1,36 +1,37 @@
+import React, { useContext } from "react";
+import { NavLink } from "react-router-dom";
 import { AiFillDashboard } from "react-icons/ai";
 import { FaUser } from "react-icons/fa";
-import { IoExit } from "react-icons/io5";
 import { MdOutlineWork } from "react-icons/md";
-import { NavLink } from "react-router-dom";
-import React from "react";
 import { RiFileCopy2Fill } from "react-icons/ri";
+import { IoExit } from "react-icons/io5";
+import { UserContext } from "../../Context/UserContext";
+import { useHistory } from "react-router-dom";
 
 const Sidebar = ({id}) => {
-    const logOut = () => {
-        fetch("/api/logout", {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }).then(() => {
-          window.location = "/";
-        });
-      };
+    const {logOut} = useContext(UserContext);
+    const {push} = useHistory()
+
+    const handleLogOut = () => {
+        logOut()
+        push('/')
+    }
+    
+  
 
     return (
         <div className="col-md-4 col-lg-3 pr-md-4">
             <ul className="sidebar__menu">
-              <li className="sidebar__item pl-md-2 pr-md-0">
-                <NavLink exact to={`/dashboard/`} activeClassName="sidebar--sidebar--active" className='sidebar__link'>
-                  Dashboard
-                </NavLink>
-                  <span className='sidebar__icon'>
-                    <AiFillDashboard />
-                  </span>
+              <li className="sidebar__item">
+                <NavLink exact to={`/dashboard/${id}`} activeClassName="sidebar--active bold" className='sidebar__link'>
+                    Dashboard
+                    <span className='sidebar__icon'>
+                      <AiFillDashboard />
+                    </span>
+                  </NavLink>
               </li>
               <li className="sidebar__item">
-                <NavLink exact to={`/dashboard/perfil`} activeClassName="sidebar--active" className='sidebar__link'>
+                <NavLink exact to={`/dashboard/${id}/perfil`} activeClassName="sidebar--active  bold" className='sidebar__link'>
                   Mi perfil
                   <span className='sidebar__icon'>
                     <FaUser />
@@ -38,7 +39,7 @@ const Sidebar = ({id}) => {
                 </NavLink>
               </li>
               <li className="sidebar__item">
-                <NavLink exact to={`/dashboard/postulaciones`} activeClassName="sidebar--active" className='sidebar__link'>
+                <NavLink exact to={`/dashboard/${id}/postulaciones`} activeClassName="sidebar--active  bold" className='sidebar__link'>
                   Mis postulaciones
                   <span className='sidebar__icon'>
                     <RiFileCopy2Fill />
@@ -46,7 +47,7 @@ const Sidebar = ({id}) => {
                 </NavLink>
               </li>
               <li className="sidebar__item">
-                <NavLink exact to={`/dashboard/guardado`} activeClassName="sidebar--active" className='sidebar__link'>
+                <NavLink exact to={`/dashboard/${id}/guardado`} activeClassName="sidebar--active  bold" className='sidebar__link'>
                   Guardados
                   <span className='sidebar__icon'>
                     <MdOutlineWork />
@@ -54,12 +55,16 @@ const Sidebar = ({id}) => {
                 </NavLink>
               </li>
               <li className="sidebar__item">
-                <NavLink exact to='' activeClassName="sidebar--active" className='sidebar__link' onClick={logOut}>
+                <button 
+                  className='sidebar__link border-0 ' 
+                  style={{backgroundColor: 'transparent'}}
+                  onClick={handleLogOut}
+                  >
                   Salir
                   <span className='sidebar__icon'>
                     <IoExit />
                   </span>
-                </NavLink>
+                </button>
               </li>
             </ul>
         </div>

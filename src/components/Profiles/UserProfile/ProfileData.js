@@ -1,36 +1,24 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext } from 'react'
+import { UserContext } from '../../../Context/UserContext';
 
 const ProfileData = () => {
-    const [dataUser, setDataUser] = useState([]);
-
-    useEffect(() => {
-      fetch("/api/getuser")
-        .then((res) => res.json())
-        .then((res) => setDataUser(res))
-        .catch((err) => {
-          console.log(`error: ${err}`);
-        });
-    }, []);
-    
+    const {dataUser} = useContext(UserContext);
 
     return (
-        <section className="py-5 bg-light" id="scroll-target" style={{backgroundColor: '#fff'}}>
-            <h2 className='text-center bold mb-4'>Perfil</h2>
-            <div className="container px-5">
-                
-
+        <section className="py-5">
+            <h2 className='text-center bold mb-4'>Tus datos</h2>
+            <div className="container px-5 profileData" >
                 <div className='row'>
-                    <div className='col-3'>
-                          <p>Email: {dataUser.username}</p>
-                          <p>Nombre: {dataUser.name}</p>
-                          <p>Apellido {dataUser.lastname}</p>
-                          <p>Género: {dataUser.gender}</p>
-                          <p>Github: {dataUser.github}</p>
-                          <p>Linkedin: {dataUser.linkedin}</p>
-                          <p>Portfolio: {dataUser.portfolio}</p>
-                    </div>
-                    <div className='col-3'>
-                        
+                    <div className='col-12'>
+                        <ul className='py-4'>
+                            <li className='bold'>Nombre completo: <span>{dataUser.name} {dataUser.lastname}</span></li>
+                            <li className='bold'>Email: <span>{dataUser.username}</span></li>
+                            <li className='bold'>Github: <span>{dataUser.github}</span></li>
+                            <li className='bold'>Linkedin: <span>{dataUser.linkedin}</span></li>
+                            <li className='bold'>Portfolio: <span>{dataUser.portfolio}</span></li>
+                            <li className='bold'>Genero: <span>{dataUser.gender}</span></li>
+                            <li className='bold'>Área de conocimiento: <span>{dataUser.knowledgeareas}</span></li>
+                        </ul>
                     </div>
                 </div>
             </div>

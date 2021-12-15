@@ -1,9 +1,13 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 
 import Axios from "axios";
 import { Link } from 'react-router-dom';
+import { UserContext } from '../../Context/UserContext';
+import { useHistory } from 'react-router-dom';
 
 const LoginForm = () => {
+  const {setAuthUser} = useContext(UserContext)
+  const {push} = useHistory()
   const [dataUserName, setDataUserName] = useState([]);
   const [dataUserPass, setDataUserPass] = useState([]);
 
@@ -20,9 +24,11 @@ const LoginForm = () => {
           const data = res.data;
           const status = res.status;
           if(data === "No User Exists") {
+              setAuthUser(false)
               window.location = "/faillogin"
           } else if(status === 200 && data !== "No User Exists") {
-              window.location = "/"
+              setAuthUser(true)
+              push('/') 
           }
       });
     };
@@ -48,7 +54,7 @@ const LoginForm = () => {
 
                   <div className="d-flex align-items-center mb-3 pb-1">
                     <i className="fas fa-cubes fa-2x me-3" style={{color: '#ff6219'}}></i>
-                    <span className="h1 fw-bold mb-0">Get On Board Jr</span>
+                    <span className="h1 fw-bold mb-0">Get On Board Junior</span>
                   </div>
 
                   <h5 className="fw-normal mb-3 pb-3" style={{letterSpacing: '1px'}}>Ingresa a tu cuenta</h5>
@@ -64,7 +70,7 @@ const LoginForm = () => {
                   </div>
 
                   <div className="pt-1 mb-4">
-                    <button onClick={login} className="btn btn-dark btn-lg btn-block" type="button">Acceder</button>
+                    <button onClick={login} className="btn btn-primary text-light btn-lg btn-block" type="button">Acceder</button>
                   </div>
 
                   <a className="small text-muted" href="#!">Olvidaste tu contraseña?</a>

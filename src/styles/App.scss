@@ -2,6 +2,9 @@
 @import './themes.scss';
 @import url('https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700&display=swap');
 
+
+
+@import '../components/Layout/layout';
 @import '../components/Header/header';
 @import '../components/Navbar/navbar';
 @import '../components/Sections/FeaturesSection/features';
@@ -10,6 +13,9 @@
 @import '../components/Sidebar/sidebar';
 @import '../components/Profiles/userProfile';
 @import '../components/Profiles/JobProfile/bussnessProfile';
+@import '../components/Profiles/UserProfile/profileData';
+@import '../components/ErrorPage/error';
+
 
 * {
     font-family: 'Lato', sans-serif;

@@ -11,7 +11,7 @@ const Profile = ({children}) => {
         <section className="py-5">
             <div className="container">
                 <div className="row">
-                    <Sidebar />
+                    <Sidebar id={id}/>
                     <div className="col-md-8 col-lg-9">
                         <div className="dashboard-area">
                             <ProfileHeader id={id} />

@@ -2,7 +2,7 @@ import React from 'react'
 
 const TestimonialSection = () => {
     return (
-        <div className="py-5 bg-light">
+        <div className="py-5" style={{backgroundColor: '#005267', color: '#fff'}}>
             <div className="container px-5 my-5">
                 <div className="row gx-5 justify-content-center">
                     <div className="col-lg-10 col-xl-7">

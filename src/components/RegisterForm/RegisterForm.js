@@ -1,8 +1,10 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 
 import Axios from "axios";
+import { UserContext } from "../../Context/UserContext";
 
 const RegisterForm = () => {
+  const {setAuthUser} = useContext(UserContext)
   const [dataUserName, setDataUserName] = useState([]);
   const [dataName, setDataName] = useState([]);
   const [dataLastName, setDataLastName] = useState([]);
@@ -33,15 +35,17 @@ const RegisterForm = () => {
       const data = res.data;
       const status = res.status;
       if (data === "User Already Exists") {
+        setAuthUser(false)
         window.location = "/failregister";
       } else if (status === 200 && data !== "User Already Exists") {
+        setAuthUser(true)
         window.location = "/login";
       }
     });
   };
 
   return (
-    <section className="vh-100 gradient-custom" style={{backgroundColor: "#E96E88"}}>
+    <section className="vh-100 gradient-custom" style={{backgroundColor: "#CE7072"}}>
       <div className="container py-1 h-100">
         <div className="row justify-content-center align-items-center h-100">
           <div className="col-12 col-lg-9 col-xl-7">
@@ -52,7 +56,7 @@ const RegisterForm = () => {
               <div className="card-body p-4 p-md-5">
               <div className="d-flex align-items-center mb-3 pb-1">
                     <i className="fas fa-cubes fa-2x me-3" style={{color: '#ff6219'}}></i>
-                    <span className="h1 fw-bold mb-0">Get On Board Jr</span>
+                    <span className="h1 fw-bold mb-0">Get On Board Junior</span>
                   </div>
 
                   <h5 className="fw-normal mb-3 pb-3" style={{letterSpacing: '1px'}}>Regístrate</h5>
@@ -218,7 +222,7 @@ const RegisterForm = () => {
                         <option value="DevOps">DevOps</option>
                         <option value="QA">QA</option>
                       </select>
-                      <label className="form-label select-label">
+                      <label className="form-label select-label p-2">
                         Elije una opción
                       </label>
                     </div>
@@ -226,7 +230,7 @@ const RegisterForm = () => {
             
                   <div className="mt-4 pt-2">
                     <button
-                      class="btn btn-primary btn-lg"
+                      class="btn btn-primary text-light btn-lg"
                       type="submit"
                       onClick={register}
                       value="Registrarse"
