@@ -21,7 +21,7 @@ export const listOfCategories = async () => {
     return res.data
 }
 export const jobsForCategory = async (category) => {
-    const res = await axios.get(`https://www.getonbrd.com/api/v0/categories/${category}/jobs?per_page=10&page=1`)
+    const res = await axios.get(`https://www.getonbrd.com/api/v0/categories/${category}jobs?per_page=10&page=1`)
     return res.data
 }
 
